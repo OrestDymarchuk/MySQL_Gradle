@@ -3,5 +3,6 @@
   "user": "root",
   "password": "Qwerty1!",
 
-  "initDbSql": "sql/init_db.sql"
+  "initDbSql": "sql/init_db.sql",
+  "populateDbSql": "sql/populate_db.sql"
 }

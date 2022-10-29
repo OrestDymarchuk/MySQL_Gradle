@@ -16,6 +16,7 @@ public class Preferences {
     public static final String PASSWORD = "password";
 
     public static final String INIT_DB_SQL_PATH = "initDbSql";
+    public static final String POPULATE_DB_SQL_PATH = "populateDbSql";
 
     private Map<String, Object> preferences = new HashMap<>();
 
