@@ -48,7 +48,7 @@ public class DatabaseQueryPrinter {
         System.out.println("____________\n");
 
         dataBaseQueryService.findProjectPrices(dataBase)
-                .forEach(el -> System.out.println("The project " +
+                .forEach(el -> System.out.println("The project with id " +
                         el.getProjectId()
                         + " costs "
                         + el.getPrice()
