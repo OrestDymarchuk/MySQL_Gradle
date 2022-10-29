@@ -19,15 +19,14 @@ public class DatabaseQueryService {
     List<MaxSalaryWorker> maxSalaryWorker(DataBase dataBase) {
         List<MaxSalaryWorker> maxSalaryWorkers = new ArrayList<>();
 
-        try {
-            String initDbFilename = preferences.getString(Preferences.MAX_SALARY_WORKER_DB_SQL_PATH);
+        try (Statement st = dataBase.getConnection().createStatement()) {
+            String maxSalaryWorkerSql = preferences.getString(Preferences.MAX_SALARY_WORKER_DB_SQL_PATH);
 
             String sql = String.join(
                     "\n",
-                    Files.readAllLines(Paths.get(initDbFilename))
+                    Files.readAllLines(Paths.get(maxSalaryWorkerSql))
             );
 
-            Statement st = dataBase.getConnection().createStatement();
             ResultSet resultSet = st.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -36,7 +35,6 @@ public class DatabaseQueryService {
                         resultSet.getString("salary")
                 ));
             }
-            st.close();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -47,15 +45,14 @@ public class DatabaseQueryService {
     List<MaxProjectsClient> findMaxProjectsClient(DataBase dataBase) {
         List<MaxProjectsClient> maxProjectsClients = new ArrayList<>();
 
-        try {
-            String initDbFilename = preferences.getString(Preferences.MAX_PROJECTS_CLIENT_DB_SQL_PATH);
+        try (Statement st = dataBase.getConnection().createStatement()) {
+            String maxProjectClientSql = preferences.getString(Preferences.MAX_PROJECTS_CLIENT_DB_SQL_PATH);
 
             String sql = String.join(
                     "\n",
-                    Files.readAllLines(Paths.get(initDbFilename))
+                    Files.readAllLines(Paths.get(maxProjectClientSql))
             );
 
-            Statement st = dataBase.getConnection().createStatement();
             ResultSet resultSet = st.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -64,7 +61,6 @@ public class DatabaseQueryService {
                         resultSet.getString("project_count")
                 ));
             }
-            st.close();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -75,15 +71,14 @@ public class DatabaseQueryService {
     List<LongestProject> findLongestProject(DataBase dataBase) {
         List<LongestProject> longestProjects = new ArrayList<>();
 
-        try {
-            String initDbFilename = preferences.getString(Preferences.LONGEST_PROJECT_SQL_PATH);
+        try (Statement st = dataBase.getConnection().createStatement()) {
+            String longestProjectSql = preferences.getString(Preferences.LONGEST_PROJECT_SQL_PATH);
 
             String sql = String.join(
                     "\n",
-                    Files.readAllLines(Paths.get(initDbFilename))
+                    Files.readAllLines(Paths.get(longestProjectSql))
             );
 
-            Statement st = dataBase.getConnection().createStatement();
             ResultSet resultSet = st.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -92,7 +87,6 @@ public class DatabaseQueryService {
                         resultSet.getString("month_count")
                 ));
             }
-            st.close();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -103,15 +97,14 @@ public class DatabaseQueryService {
     List<YoungestEldestWorkers> findYoungestEldestWorkers(DataBase dataBase) {
         List<YoungestEldestWorkers> youngestEldestWorkers = new ArrayList<>();
 
-        try {
-            String initDbFilename = preferences.getString(Preferences.YOUNGEST_ELDEST_WORKERS);
+        try (Statement st = dataBase.getConnection().createStatement()){
+            String youngestEldestWorkersSql = preferences.getString(Preferences.YOUNGEST_ELDEST_WORKERS);
 
             String sql = String.join(
                     "\n",
-                    Files.readAllLines(Paths.get(initDbFilename))
+                    Files.readAllLines(Paths.get(youngestEldestWorkersSql))
             );
 
-            Statement st = dataBase.getConnection().createStatement();
             ResultSet resultSet = st.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -121,7 +114,6 @@ public class DatabaseQueryService {
                         resultSet.getString("type")
                 ));
             }
-            st.close();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
@@ -132,15 +124,14 @@ public class DatabaseQueryService {
     List<ProjectPrices> findProjectPrices(DataBase dataBase) {
         List<ProjectPrices> projectPrices = new ArrayList<>();
 
-        try {
-            String initDbFilename = preferences.getString(Preferences.PROJECT_PRICES);
+        try (Statement st = dataBase.getConnection().createStatement()) {
+            String projectPricesSql = preferences.getString(Preferences.PROJECT_PRICES);
 
             String sql = String.join(
                     "\n",
-                    Files.readAllLines(Paths.get(initDbFilename))
+                    Files.readAllLines(Paths.get(projectPricesSql))
             );
 
-            Statement st = dataBase.getConnection().createStatement();
             ResultSet resultSet = st.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -149,7 +140,6 @@ public class DatabaseQueryService {
                         resultSet.getString("price")
                 ));
             }
-            st.close();
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
