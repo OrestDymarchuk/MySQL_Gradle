@@ -30,15 +30,6 @@ public class DataBase {
         }
     }
 
-//    public ResultSet executeQuery(String sql){
-//        try(Statement st = connection.createStatement()) {
-//            return st.executeQuery(sql);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
     public static DataBase getInstance(){
         return instance;
     }
