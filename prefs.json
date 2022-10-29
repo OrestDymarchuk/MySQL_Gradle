@@ -1,0 +1,7 @@
+{
+  "dbUrl": "jdbc:mysql://localhost:3306/MegaSoft",
+  "user": "root",
+  "password": "Qwerty1!",
+
+  "initDbSql": "sql/init_db.sql"
+}
