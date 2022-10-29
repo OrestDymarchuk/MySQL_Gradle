@@ -44,5 +44,6 @@ public class DatabaseInitService {
     public static void main(String[] args) {
         DataBase dataBase = DataBase.getInstance();
         new DatabaseInitService().initDB(dataBase);
+        dataBase.close();
     }
 }

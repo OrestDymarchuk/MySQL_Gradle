@@ -43,5 +43,6 @@ public class DatabasePopulateService {
     public static void main(String[] args) {
         DataBase dataBase = DataBase.getInstance();
         new DatabasePopulateService().populateDB(dataBase);
+        dataBase.close();
     }
 }

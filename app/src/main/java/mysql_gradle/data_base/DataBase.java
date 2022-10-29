@@ -2,10 +2,7 @@ package mysql_gradle.data_base;
 
 import mysql_gradle.preferences.Preferences;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DataBase {
     private static final DataBase instance = new DataBase();
@@ -32,6 +29,15 @@ public class DataBase {
             return -1;
         }
     }
+
+//    public ResultSet executeQuery(String sql){
+//        try(Statement st = connection.createStatement()) {
+//            return st.executeQuery(sql);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public static DataBase getInstance(){
         return instance;
