@@ -16,7 +16,7 @@ import java.util.List;
 public class DatabaseQueryService {
     private static final Preferences preferences = new Preferences();
 
-    List<MaxSalaryWorker> maxSalaryWorker(DataBase dataBase) {
+    public List<MaxSalaryWorker> maxSalaryWorker(DataBase dataBase) {
         List<MaxSalaryWorker> maxSalaryWorkers = new ArrayList<>();
 
         try (Statement st = dataBase.getConnection().createStatement()) {
@@ -42,7 +42,7 @@ public class DatabaseQueryService {
         return maxSalaryWorkers;
     }
 
-    List<MaxProjectsClient> findMaxProjectsClient(DataBase dataBase) {
+    public List<MaxProjectsClient> findMaxProjectsClient(DataBase dataBase) {
         List<MaxProjectsClient> maxProjectsClients = new ArrayList<>();
 
         try (Statement st = dataBase.getConnection().createStatement()) {
@@ -68,7 +68,7 @@ public class DatabaseQueryService {
         return maxProjectsClients;
     }
 
-    List<LongestProject> findLongestProject(DataBase dataBase) {
+    public List<LongestProject> findLongestProject(DataBase dataBase) {
         List<LongestProject> longestProjects = new ArrayList<>();
 
         try (Statement st = dataBase.getConnection().createStatement()) {
@@ -94,7 +94,7 @@ public class DatabaseQueryService {
         return longestProjects;
     }
 
-    List<YoungestEldestWorkers> findYoungestEldestWorkers(DataBase dataBase) {
+    public List<YoungestEldestWorkers> findYoungestEldestWorkers(DataBase dataBase) {
         List<YoungestEldestWorkers> youngestEldestWorkers = new ArrayList<>();
 
         try (Statement st = dataBase.getConnection().createStatement()){
@@ -121,7 +121,7 @@ public class DatabaseQueryService {
         return youngestEldestWorkers;
     }
 
-    List<ProjectPrices> findProjectPrices(DataBase dataBase) {
+    public List<ProjectPrices> findProjectPrices(DataBase dataBase) {
         List<ProjectPrices> projectPrices = new ArrayList<>();
 
         try (Statement st = dataBase.getConnection().createStatement()) {
