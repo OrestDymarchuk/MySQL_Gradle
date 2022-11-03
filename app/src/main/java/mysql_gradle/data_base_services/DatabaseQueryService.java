@@ -7,9 +7,7 @@ import mysql_gradle.preferences.Preferences;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,6 +148,6 @@ public class DatabaseQueryService {
     public static void main(String[] args) {
         DataBase dataBase = DataBase.getInstance();
         new DatabaseQueryPrinter().queryPrinter(dataBase);
-
+        dataBase.close();
     }
 }
