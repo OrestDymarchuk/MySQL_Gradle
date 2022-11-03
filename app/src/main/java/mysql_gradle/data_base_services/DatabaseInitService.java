@@ -13,10 +13,9 @@ import java.util.List;
 public class DatabaseInitService {
 
     public void initDB(DataBase dataBase) {
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new FileReader(new Preferences().
-                            getString(Preferences.INIT_DB_SQL_PATH)));
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(new Preferences().
+                        getString(Preferences.INIT_DB_SQL_PATH)))){
 
             StringBuilder stringBuilder = new StringBuilder();
             String s = null;

@@ -12,11 +12,9 @@ import java.util.List;
 
 public class DatabasePopulateService {
     public void populateDB(DataBase dataBase) {
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new FileReader(new Preferences().
-                            getString(Preferences.POPULATE_DB_SQL_PATH)));
-
+        try (BufferedReader reader = new BufferedReader(
+                new FileReader(new Preferences().
+                        getString(Preferences.POPULATE_DB_SQL_PATH)));){
             StringBuilder stringBuilder = new StringBuilder();
             String s = null;
             List<String> collect = new ArrayList<>();
