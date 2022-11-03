@@ -21,15 +21,6 @@ public class DataBase {
         }
     }
 
-    public int executeUpdate(String sql){
-        try(Statement st = connection.createStatement()) {
-            return st.executeUpdate(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
     public static DataBase getInstance(){
         return instance;
     }
