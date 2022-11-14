@@ -15,15 +15,6 @@ public class Preferences {
     public static final String USER = "user";
     public static final String PASSWORD = "password";
 
-    public static final String INIT_DB_SQL_PATH = "initDbSql";
-    public static final String POPULATE_DB_SQL_PATH = "populateDbSql";
-
-    public static final String MAX_SALARY_WORKER_DB_SQL_PATH = "maxSalaryWorkerDbSql";
-    public static final String MAX_PROJECTS_CLIENT_DB_SQL_PATH = "maxProjectsClientDbSql";
-    public static final String LONGEST_PROJECT_SQL_PATH = "longestProjectDbSql";
-    public static final String YOUNGEST_ELDEST_WORKERS = "youngestEldestWorkersDbSql";
-    public static final String PROJECT_PRICES = "projectPricesDbSql";
-
     private Map<String, Object> preferences = new HashMap<>();
 
     public Preferences(){

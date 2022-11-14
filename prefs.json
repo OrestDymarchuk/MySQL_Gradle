@@ -1,13 +1,5 @@
 {
   "dbUrl": "jdbc:mysql://localhost:3306/MegaSoft",
   "user": "root",
-  "password": "Qwerty1!",
-
-  "initDbSql": "sql/init_db.sql",
-  "populateDbSql": "sql/populate_db.sql",
-  "maxSalaryWorkerDbSql": "sql/find_max_salary_worker.sql",
-  "maxProjectsClientDbSql": "sql/find_max_projects_client.sql",
-  "longestProjectDbSql": "sql/find_longest_project.sql",
-  "youngestEldestWorkersDbSql": "sql/find_youngest_eldest_workers.sql",
-  "projectPricesDbSql": "sql/print_project_prices.sql"
+  "password": "Qwerty1!"
 }
