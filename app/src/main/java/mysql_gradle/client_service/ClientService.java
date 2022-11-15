@@ -2,54 +2,148 @@ package mysql_gradle.client_service;
 
 import mysql_gradle.data_base.DataBase;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientService {
-    public static void clientPrint(ClientPreparedStatement clientPreparedStatement){
-        clientPreparedStatement.listAll().forEach(el -> System.out.println("The client id(s): "
-                + el.getId()
-                + ", the client's name "
-                + el.getName()
-        ));
+
+    private PreparedStatement createClientStatement;
+    private PreparedStatement selectClientByIdStatement;
+    private PreparedStatement setNameByIdStatement;
+    private PreparedStatement deleteByIdStatement;
+    private PreparedStatement selectAllClientsStatement;
+
+    public ClientService(DataBase dataBase) {
+        Connection conn = dataBase.getConnection();
+
+        try {
+            createClientStatement = conn.prepareStatement(
+                    "INSERT INTO client (name) VALUES (?);",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+
+            selectClientByIdStatement = conn.prepareStatement(
+                    "SELECT id, name FROM client where id = ?"
+            );
+
+            setNameByIdStatement = conn.prepareStatement(
+                    "UPDATE client SET name = ? WHERE id = ?;"
+            );
+
+            deleteByIdStatement = conn.prepareStatement(
+                    "DELETE from client where id = ?;"
+            );
+
+            selectAllClientsStatement = conn.prepareStatement(
+                    "SELECT id, name FROM client;"
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void main(String[] args) {
-        DataBase dataBase = DataBase.getInstance();
-        ClientPreparedStatement clientPreparedStatement = new ClientPreparedStatement(dataBase);
+    public long create(String name) {
+        long id = -1;
+        if (name.length() < 2 || name.length() >= 100) {
+            System.out.println("A new client cannot be created due to the restrictions, " +
+                    "the name must be at least 2 characters and no more than 100 characters, " +
+                    "and the name length of the provided client is: " + name.length());
 
-        // Print all clients
-        clientPrint(clientPreparedStatement);
+        } else {
+            try {
+                createClientStatement.setString(1, name);
+                createClientStatement.executeUpdate();
+                ResultSet rs = createClientStatement.getGeneratedKeys();
+                if (rs.next()) {
+                    id = rs.getLong(1);
+                }
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return id;
+    }
 
-        // Creating client with violation
-        System.out.println();
-        System.out.println(clientPreparedStatement.create("a"));
+    public String getById(long id) {
+        try {
+            selectClientByIdStatement.setLong(1, id);
+            selectClientByIdStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        // Creating client without violation
-        System.out.println();
-        System.out.println(clientPreparedStatement.create("Bruce"));
+        StringBuilder sb = new StringBuilder();
+        try (ResultSet rs = selectClientByIdStatement.executeQuery()) {
+            if (!rs.next()) {
+                sb.append("The client with ID ")
+                        .append(id)
+                        .append(" does not exist");
+            } else {
+                sb.append(rs.getString("name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
 
-        // Print non-existing client
-        System.out.println();
-        System.out.println(clientPreparedStatement.getById(100000));
+    public void setName(long id, String name) {
+        try {
+            selectClientByIdStatement.setLong(1, id);
+            selectClientByIdStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        // Print existing client
-        System.out.println();
-        System.out.println(clientPreparedStatement.getById(5));
+        try (ResultSet rs = selectClientByIdStatement.executeQuery()) {
+            if (!rs.next()) {
+                System.out.println("The client name cannot be changed due to a non-existent client ID " + id);
+            } else {
+                setNameByIdStatement.setString(1, name);
+                setNameByIdStatement.setLong(2, id);
+                setNameByIdStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-        // Set name to non-existing client
-        System.out.println();
-        clientPreparedStatement.setName(100000, "Karl");
+    public void deleteById(long id) {
+        try {
+            selectClientByIdStatement.setLong(1, id);
+            selectClientByIdStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        // Set name to existing client
-        clientPreparedStatement.setName(5, "Nathan");
+        try (ResultSet rs = selectClientByIdStatement.executeQuery()) {
+            if (!rs.next()) {
+                System.out.println("The client cannot be deleted due to a non-existent client ID " + id);
+            } else {
+                deleteByIdStatement.setLong(1, id);
+                deleteByIdStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-        // Delete non-existing client
-        System.out.println();
-        clientPreparedStatement.deleteById(10000);
+    public List<Client> listAll() {
+        List<Client> clients = new ArrayList<>();
 
-        // Delete existing client
-        clientPreparedStatement.deleteById(6);
+        try (ResultSet rs = selectAllClientsStatement.executeQuery()) {
+            while (rs.next()) {
+                clients.add(new Client(
+                        rs.getLong("id"),
+                        rs.getString("name"))
+                );
+            }
 
-        // Print all clients
-        System.out.println();
-        clientPrint(clientPreparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clients;
     }
 }
