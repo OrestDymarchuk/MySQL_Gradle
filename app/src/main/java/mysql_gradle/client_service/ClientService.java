@@ -144,6 +144,9 @@ public class ClientService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if(clients.isEmpty()){
+            System.out.println("No client has been found");
+        }
         return clients;
     }
 }
